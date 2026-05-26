@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # 1. Broker e Cache
+  redis:
+    image: redis:7-alpine
+    container_name: finbot-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+  # 2. Banco de Dados Local (opcional para desenvolvimento local independente do Supabase)
+  postgres:
+    image: postgres:15-alpine
+    container_name: finbot-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: finbot
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: always
+
+  # 3. API Backend (FastAPI Gateway)
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./services/api-gateway/Dockerfile
+    container_name: finbot-api
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=postgresql://postgres:secretpassword@postgres:5432/finbot
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    depends_on:
+      - redis
+      - postgres
+    restart: always
+
+  # 4. Processamento em Background (Celery Workers)
+  celery-worker:
+    build:
+      context: .
+      dockerfile: ./services/workers/Dockerfile
+    container_name: finbot-worker
+    command: celery -A tasks worker --loglevel=info
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=postgresql://postgres:secretpassword@postgres:5432/finbot
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    depends_on:
+      - redis
+      - postgres
+    restart: always
+
+volumes:
+  redis_data:
+  pg_data:
