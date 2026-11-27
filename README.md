@@ -29,7 +29,7 @@ graph TD
 ### 2. Configurando o Banco de Dados no Supabase
 1. Crie uma conta gratuita em [Supabase.com](https://supabase.com/).
 2. Crie um novo projeto.
-3. Após criar o projeto, vá em **SQL Editor** no painel lateral esquerdo, clique em "New Query", cole o conteúdo do arquivo [schema.sql](file:///C:/Users/vitor/OneDrive/Documentos/Finacial%20Project/schema.sql) e clique em **Run**. Isso criará as tabelas `usuarios`, `categorias`, `transacoes` e `dividas` com as devidas restrições e índices.
+3. Após criar o projeto, vá em **SQL Editor** no painel lateral esquerdo, clique em "New Query", cole o conteúdo do arquivo [schema.sql](schema.sql) e clique em **Run**. Isso criará as tabelas `usuarios`, `categorias`, `transacoes` e `dividas` com as devidas restrições e índices.
 4. Vá em **Project Settings** > **API** e copie os seguintes campos:
    - **Project URL** (ex: `https://xxxx.supabase.co`) -> `SUPABASE_URL`
    - **API Key** (chave `anon` ou `service_role`) -> `SUPABASE_KEY`
@@ -42,12 +42,12 @@ graph TD
 ---
 
 ## 📁 Estrutura de Arquivos do Projeto
-- [requirements.txt](file:///C:/Users/vitor/OneDrive/Documentos/Finacial%20Project/requirements.txt): Todas as dependências necessárias de Python.
-- [config.py](file:///C:/Users/vitor/OneDrive/Documentos/Finacial%20Project/config.py): Módulo que carrega e valida o arquivo `.env`.
-- [schema.sql](file:///C:/Users/vitor/OneDrive/Documentos/Finacial%20Project/schema.sql): Script SQL para estrutura do banco de dados relacional.
-- [database.py](file:///C:/Users/vitor/OneDrive/Documentos/Finacial%20Project/database.py): Funções de inserção, busca de transações simples/parceladas, dívidas e consultas consolidadas.
-- [bot.py](file:///C:/Users/vitor/OneDrive/Documentos/Finacial%20Project/bot.py): Lógica do bot de Telegram integrado à inteligência artificial multimodal (Gemini).
-- [app.py](file:///C:/Users/vitor/OneDrive/Documentos/Finacial%20Project/app.py): Interface do Dashboard Analítico construído com Streamlit.
+- [requirements.txt](requirements.txt): Todas as dependências necessárias de Python.
+- [config.py](config.py): Módulo que carrega e valida o arquivo `.env`.
+- [schema.sql](schema.sql): Script SQL para estrutura do banco de dados relacional.
+- [database.py](database.py): Funções de inserção, busca de transações simples/parceladas, dívidas e consultas consolidadas.
+- [bot.py](bot.py): Lógica do bot de Telegram integrado à inteligência artificial multimodal (Gemini).
+- [app.py](app.py): Interface do Dashboard Analítico construído com Streamlit.
 
 ---
 
